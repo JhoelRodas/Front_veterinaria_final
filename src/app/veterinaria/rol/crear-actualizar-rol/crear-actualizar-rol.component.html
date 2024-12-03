@@ -1,0 +1,38 @@
+<div mat-dialog-title>{{ isCreateMode() ? 'Crear' : 'Actualizar' }} Rol</div>
+<form [formGroup]="form" (ngSubmit)="save()">
+  <mat-dialog-content>
+    <div fxLayout="column wrap">
+      <mat-form-field fxFlex>
+        <mat-label>Nombre</mat-label>
+        <input type="text" formControlName="name" matInput>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-label>Descripcion</mat-label>
+        <input type="text" formControlName="description" matInput>
+      </mat-form-field>
+
+
+      <!--      <mat-form-field *ngIf="mode != 'update'" fxFlex>-->
+      <!--        <mat-label>ID Categoria</mat-label>-->
+      <!--        <input type="text" formControlName="idCategoria" matInput>-->
+      <!--      </mat-form-field>-->
+
+
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button *ngIf="isCreateMode()"
+            mat-flat-button
+            color="primary"
+            [disabled]="!form.valid">Crear Rol
+    </button>
+    <button *ngIf="isUpdateMode()"
+            mat-flat-button
+            color="primary"
+            [disabled]="!form.valid">Actualizar Rol
+    </button>
+  </mat-dialog-actions>
+</form>
+

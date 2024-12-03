@@ -1,0 +1,53 @@
+<div mat-dialog-title>{{ isCreateMode() ? 'Crear' : 'Actualizar' }} Agenda</div>
+<form [formGroup]="form" (ngSubmit)="save()">
+  <mat-dialog-content>
+    <div fxLayout="column wrap">
+      <mat-form-field *ngIf="mode != 'update'" fxFlex>
+        <mat-label>Cliente</mat-label>
+        <input type="text" formControlName="cliente" matInput>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="mode != 'update'" fxFlex>
+        <mat-label>Ci</mat-label>
+        <input type="text" formControlName="ci" matInput>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-label>Fecha</mat-label>
+        <input type="date" formControlName="fecha" matInput>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-label>Hora</mat-label>
+        <input type="time" formControlName="hora" matInput>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-label>Descripcion</mat-label>
+        <input type="text" formControlName="descripcion" matInput>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-label>Estado</mat-label>
+        <input type="text" formControlName="estado" matInput>
+      </mat-form-field>
+
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button *ngIf="isCreateMode()"
+            mat-flat-button
+            color="primary"
+            [disabled]="!form.valid">Registrar Agenda
+    </button>
+    <button *ngIf="isUpdateMode()"
+            mat-flat-button
+            color="primary"
+            [disabled]="!form.valid">Actualizar Agenda
+    </button>
+  </mat-dialog-actions>
+</form>
+
+
+

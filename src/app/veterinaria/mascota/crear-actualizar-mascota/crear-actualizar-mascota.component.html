@@ -1,0 +1,92 @@
+<!--<div style="width: 400px; padding: 10px" [formGroup]="form">-->
+<!--  <h1>{{title}}</h1>-->
+<!--  <div style="width: 100%">-->
+<!--    <input formControlName="ci" placeholder="Nro. Documento">-->
+<!--  </div>-->
+<!--  <div style="width: 100%">-->
+<!--    <input formControlName="extension" placeholder="Extension">-->
+<!--  </div>-->
+<!--  <div style="width: 100%">-->
+<!--    <input formControlName="nombre" placeholder="Nombre">-->
+<!--  </div>-->
+<!--  <div style="width: 100%">-->
+<!--    <input formControlName="telefono" placeholder="Telefono">-->
+<!--  </div>-->
+<!--  <div style="width: 100%">-->
+<!--    <input formControlName="correo" placeholder="Correo">-->
+<!--  </div>-->
+<!--  <div style="width: 100%">-->
+<!--    <input formControlName="direccion" placeholder="Direccion">-->
+<!--  </div>-->
+<!--  <div style="width: 100%">-->
+<!--    <button (click)="save()">Guardar</button>-->
+<!--  </div>-->
+<!--</div>-->
+<div mat-dialog-title>{{ isCreateMode() ? 'Crear' : 'Actualizar' }} Mascota</div>
+<form [formGroup]="form" (ngSubmit)="save()">
+  <mat-dialog-content>
+    <div fxLayout="column wrap">
+<!--      <mat-form-field formGroupName = "ciCliente">-->
+<!--        <mat-label>Cliente</mat-label>-->
+<!--        <mat-select formControlName="id">-->
+<!--          <mat-option *ngFor="let option of clienteList"-->
+<!--                      [value]="option.id">-->
+<!--            {{option.nombre}}-->
+<!--          </mat-option>-->
+<!--        </mat-select>-->
+<!--      </mat-form-field>-->
+
+      <mat-form-field *ngIf="mode != 'update'" fxFlex>
+        <mat-label>CI Cliente</mat-label>
+        <input type="text" formControlName="ci" matInput>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-label>Nombre</mat-label>
+        <input type="text" formControlName="nombre" matInput>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-label>Edad</mat-label>
+        <input type="text" formControlName="edad" matInput>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-label>Sexo</mat-label>
+        <input type="text" formControlName="sexo" matInput>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-label>Color</mat-label>
+        <input type="text" formControlName="color" matInput>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-label>Especie</mat-label>
+        <input type="text" formControlName="especie" matInput>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-label>Raza</mat-label>
+        <input type="text" formControlName="raza" matInput>
+      </mat-form-field>
+
+
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button *ngIf="isCreateMode()"
+            mat-flat-button
+            color="primary"
+            [disabled]="!form.valid">Crear Mascota
+    </button>
+    <button *ngIf="isUpdateMode()"
+            mat-flat-button
+            color="primary"
+            [disabled]="!form.valid">Actualizar Mascota
+    </button>
+  </mat-dialog-actions>
+</form>
+
+

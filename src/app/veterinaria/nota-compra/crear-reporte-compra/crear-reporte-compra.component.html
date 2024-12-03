@@ -1,0 +1,81 @@
+<h2 mat-dialog-title>Generar Reporte</h2>
+
+<mat-dialog-content>
+  <!-- Título de los Filtros -->
+  <h3>Filtros del Reporte</h3>
+  <div fxLayout="row wrap" fxLayoutGap="16px" fxLayoutAlign="start start" [formGroup]="form">
+    <!-- Rango de Fechas -->
+    <mat-form-field fxFlex="100" fxFlex.xs="100">
+      <mat-label>Rango de fecha</mat-label>
+      <mat-date-range-input [rangePicker]="picker">
+        <input matStartDate formControlName="from" placeholder="Inicio">
+        <input matEndDate formControlName="to" placeholder="Fin">
+      </mat-date-range-input>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+      <mat-error *ngIf="form.controls.from.hasError('matStartDateInvalid')">Fecha de inicio inválida</mat-error>
+      <mat-error *ngIf="form.controls.to.hasError('matEndDateInvalid')">Fecha de fin inválida</mat-error>
+    </mat-form-field>
+
+    <!-- Monto Mayor -->
+    <mat-form-field fxFlex="50" fxFlex.xs="100">
+      <mat-label>Monto Mayor</mat-label>
+      <input
+        matInput
+        type="number"
+        formControlName="montoMayor"
+        placeholder="Ingrese monto mayor"
+        min="0"
+        step="1"
+        (input)="formatDecimals('montoMayor')"
+        (blur)="formatDecimals('montoMayor')"
+      />
+      <mat-error *ngIf="form.controls.montoMayor.hasError('min')">
+        El monto debe ser mayor o igual a 0.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Monto Menor -->
+    <mat-form-field fxFlex="50" fxFlex.xs="100">
+      <mat-label>Monto Menor</mat-label>
+      <input
+        matInput
+        type="number"
+        formControlName="montoMenor"
+        placeholder="Ingrese monto menor"
+        min="0"
+        step="1"
+        (input)="formatDecimals('montoMenor')"
+        (blur)="formatDecimals('montoMenor')"
+      />
+      <mat-error *ngIf="form.controls.montoMenor.hasError('min')">
+        El monto debe ser mayor o igual a 0.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Proveedor -->
+    <mat-form-field fxFlex="100" fxFlex.xs="100">
+      <mat-label>Proveedor</mat-label>
+      <mat-select formControlName="nombreProveedor">
+        <mat-option *ngFor="let option of proveedoresList" [value]="option.nombre">
+          {{ option.nombre }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <!-- Título de las Cabeceras -->
+  <h3>Cabeceras del Reporte</h3>
+  <div fxLayout="row wrap" fxLayoutGap="16px" fxLayoutAlign="start start" class="checkbox-container">
+    <div fxFlex="25%" *ngFor="let column of columns" [hidden]="!column.visible || column.property === 'actions'">
+      <mat-checkbox [(ngModel)]="column.selected">
+        {{ column.name }}
+      </mat-checkbox>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" (click)="generateReport()">Generar</button>
+  <button mat-raised-button mat-dialog-close>Cancelar</button>
+</mat-dialog-actions>

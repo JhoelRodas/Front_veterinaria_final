@@ -1,0 +1,97 @@
+<fury-page-layout mode="card">
+  <fury-page-layout-header>
+    <fury-breadcrumbs [crumbs]="['Bitacoras']" current="Bitacora"></fury-breadcrumbs>
+  </fury-page-layout-header>
+  <fury-page-layout-content>
+    <fury-list name="Bitacora" (filterChange)="filterData($event)">
+        <div fxLayout="row wrap" [formGroup]="form">
+          <div fxFlex="30">
+            <mat-form-field>
+              <mat-label>Rango de fecha</mat-label>
+              <mat-date-range-input [rangePicker]="picker">
+                <input matStartDate formControlName="from" placeholder="Inicio">
+                <input matEndDate formControlName="to" placeholder="Fin">
+              </mat-date-range-input>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+              <mat-error *ngIf="form.controls.from.hasError('matStartDateInvalid')">Fecha de inicio inválida</mat-error>
+              <mat-error *ngIf="form.controls.to.hasError('matEndDateInvalid')">Fecha de fin inválida</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex="30">
+            <mat-form-field>
+              <mat-label>Tipo de proceso</mat-label>
+              <mat-select formControlName="process">
+                <mat-option *ngFor="let option of tipoProcesoList"
+                            [value]="option.codigo">
+                  {{option.descripcion}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100">
+            <button mat-flat-button
+                    (click)="applyFilter()"
+                    color="accent"
+                    type="button">
+              <mat-icon>search</mat-icon>Buscar
+            </button>
+          </div>
+        </div>
+      <div fxLayout="row wrap">
+        <div fxFlex="100" class="table-scroll">
+          <table [dataSource]="dataSource" mat-table matSort>
+
+            <!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Checkbox Column -->
+            <ng-container matColumnDef="checkbox">
+              <th *matHeaderCellDef class="actions-cell" mat-header-cell>
+                <mat-checkbox color="primary" (click)="$event.stopPropagation()"></mat-checkbox>
+              </th>
+              <td *matCellDef="let row" class="actions-cell" mat-cell>
+                <mat-checkbox color="primary" (click)="$event.stopPropagation()"></mat-checkbox>
+              </td>
+            </ng-container>
+
+            <!-- fullName Column -->
+            <ng-container *ngFor="let column of columns">
+              <ng-container *ngIf="column.isModelProperty" [matColumnDef]="column.property">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> {{ column.name }}</th>
+                <td *matCellDef="let row" mat-cell>
+                  {{ row[column.property] }}
+                </td>
+              </ng-container>
+            </ng-container>
+
+
+            <!--  actions Column -->
+            <ng-container matColumnDef="actions">
+              <th *matHeaderCellDef class="actions-cell" mat-header-cell mat-sort-header></th>
+              <td *matCellDef="let row" class="actions-cell" mat-cell>
+                <button type="button" mat-icon-button [matMenuTriggerFor]="actionsMenu" (click)="$event.stopPropagation()">
+                  <mat-icon>more_horiz</mat-icon>
+                </button>
+
+                <mat-menu #actionsMenu="matMenu" yPosition="below" xPosition="before">
+                  <button (click)="verMas(row)" mat-menu-item>
+                    <span>Ver mas</span>
+                  </button>
+                </mat-menu>
+              </td>
+            </ng-container>
+
+            <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
+            <tr *matRowDef="let row; columns: visibleColumns;"
+                class="clickable route-animations-elements"
+                mat-row></tr>
+          </table>
+
+          <mat-paginator class="paginator" [pageSize]="pageSize"></mat-paginator>
+
+        </div>
+      </div>
+    </fury-list>
+  </fury-page-layout-content>
+</fury-page-layout>

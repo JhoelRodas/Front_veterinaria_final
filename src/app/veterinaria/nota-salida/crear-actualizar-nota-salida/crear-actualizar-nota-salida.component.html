@@ -1,0 +1,45 @@
+<div mat-dialog-title>{{ isCreateMode() ? 'Crear' : 'Actualizar' }} Nota de Salida</div>
+<form [formGroup]="form" (ngSubmit)="save()">
+  <mat-dialog-content>
+    <div fxLayout="column wrap">
+      <mat-form-field>
+        <mat-label>Productos</mat-label>
+        <mat-select formControlName="idProducto">
+          <mat-option *ngFor="let option of productosList"
+                      [value]="option.id">
+            {{option.nombre}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-label>Fecha</mat-label>
+        <input type="date" formControlName="fecha" matInput>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-label>Cantidad</mat-label>
+        <input type="text" formControlName="cantidad" matInput>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-label>Motivo</mat-label>
+        <input type="text" formControlName="motivo" matInput>
+      </mat-form-field>
+
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button *ngIf="isCreateMode()"
+            mat-flat-button
+            color="primary"
+            [disabled]="!form.valid">Crear Nota de Salida
+    </button>
+    <button *ngIf="isUpdateMode()"
+            mat-flat-button
+            color="primary"
+            [disabled]="!form.valid">Actualizar Nota de Salida
+    </button>
+  </mat-dialog-actions>
+</form>

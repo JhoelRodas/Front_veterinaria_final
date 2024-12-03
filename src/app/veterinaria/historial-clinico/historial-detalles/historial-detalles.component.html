@@ -1,0 +1,220 @@
+<fury-page-layout mode="simple">
+  <fury-page-layout-header>
+    <fury-breadcrumbs [crumbs]="['Historial Clinico']" current="Historial Clinico"></fury-breadcrumbs>
+  </fury-page-layout-header>
+
+  <fury-page-layout-content>
+    <div fxLayout="column wrap" [formGroup]="form">
+      <div fxFlex="100">
+        <div fxLayout="row wrap">
+          <div fxFlex="100" fxFlex.gt-xs="50">
+            <div fxLayout="row wrap">
+              <div fxFlex="100">
+                <h3>Informacion de la Mascota</h3>
+              </div>
+              <div fxFlex="100">
+                <mat-form-field appearance="fill" fxFlex>
+                  <mat-label>ID Historial</mat-label>
+                  <input matInput formControlName="id" readonly>
+                </mat-form-field>
+              </div>
+
+              <div fxFlex="100">
+                <mat-form-field appearance="fill" fxFlex>
+                  <mat-label>Nombre</mat-label>
+                  <input matInput formControlName="nombreMascota" readonly>
+                </mat-form-field>
+              </div>
+
+              <div fxFlex="100">
+                <mat-form-field appearance="fill" fxFlex>
+                  <mat-label>Especie</mat-label>
+                  <input matInput formControlName="especie" readonly>
+                </mat-form-field>
+              </div>
+
+              <div fxFlex="100">
+                <mat-form-field appearance="fill" fxFlex>
+                  <mat-label>Raza</mat-label>
+                  <input matInput formControlName="raza" readonly>
+                </mat-form-field>
+              </div>
+
+              <div fxFlex="100">
+                <mat-form-field appearance="fill" fxFlex>
+                  <mat-label>Sexo</mat-label>
+                  <input matInput formControlName="sexo" readonly>
+                </mat-form-field>
+              </div>
+
+            </div>
+
+          </div>
+          <div fxFlex="100" fxFlex.gt-xs="50">
+            <div fxLayout="row wrap">
+              <div fxFlex="100">
+                <h3>Información del Propietario</h3>
+              </div>
+              <div fxFlex="100">
+                <mat-form-field appearance="fill" fxFlex>
+                  <mat-label>Nombre del Propietario</mat-label>
+                  <input matInput formControlName="nombrePropietario" readonly>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div fxFlex="100">
+        <div fxLayout="row wrap">
+          <div fxFlex="100">
+            <h3>Datos del Historial</h3>
+          </div>
+
+          <div fxFlex="100">
+            <mat-form-field appearance="fill" fxFlex>
+              <mat-label>(Frecuencia Cardiaca)</mat-label>
+              <input matInput formControlName="estadoFc">
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="100">
+            <mat-form-field appearance="fill" fxFlex>
+              <mat-label>(Frecuencia Respiratoria)</mat-label>
+              <input matInput formControlName="estadoFr">
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="100">
+            <mat-form-field appearance="fill" fxFlex>
+              <mat-label>(Mucosa)</mat-label>
+              <input matInput formControlName="mucosa">
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="100">
+            <mat-form-field appearance="fill" fxFlex>
+              <mat-label>(Apetito)</mat-label>
+              <input matInput formControlName="apetito">
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="100">
+            <mat-form-field appearance="fill" fxFlex>
+              <mat-label>(Hidratacion)</mat-label>
+              <input matInput formControlName="hidratacion">
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="100">
+            <mat-form-field appearance="fill" fxFlex>
+              <mat-label>(Estado general)</mat-label>
+              <input matInput formControlName="estadoGeneral">
+            </mat-form-field>
+          </div>
+
+        </div>
+      </div>
+          <div fxLayoutAlign="end" style="margin-top: 20px;">
+            <button mat-raised-button color="primary" (click)="guardarDetallesDeHistorial()">Guardar Cambios</button>
+          </div>
+    </div>
+
+
+    <div>
+      <div fxLayoutAlign="star" style="margin-top: 20px;">
+        <button mat-raised-button color="primary" (click)="registarVacunaAplicada()">Registrar Vacuna Aplicada</button>
+      </div>
+      <table [dataSource]="dataSource" mat-table matSort>
+
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="checkbox">
+          <th *matHeaderCellDef class="actions-cell" mat-header-cell>
+            <mat-checkbox color="primary" (click)="$event.stopPropagation()"></mat-checkbox>
+          </th>
+          <td *matCellDef="let row" class="actions-cell" mat-cell>
+            <mat-checkbox color="primary" (click)="$event.stopPropagation()"></mat-checkbox>
+          </td>
+        </ng-container>
+
+        <!-- fullName Column -->
+        <ng-container *ngFor="let column of columns">
+          <ng-container *ngIf="column.isModelProperty" [matColumnDef]="column.property">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header> {{ column.name }}</th>
+            <td *matCellDef="let row" mat-cell>
+              {{ row[column.property] }}
+            </td>
+          </ng-container>
+        </ng-container>
+
+
+        <!--          actions Column-->
+        <ng-container matColumnDef="actions">
+          <th *matHeaderCellDef class="actions-cell" mat-header-cell mat-sort-header></th>
+          <td *matCellDef="let row" class="actions-cell" mat-cell>
+            <button type="button" mat-icon-button [matMenuTriggerFor]="actionsMenu" (click)="$event.stopPropagation()">
+              <mat-icon>more_horiz</mat-icon>
+            </button>
+
+            <mat-menu #actionsMenu="matMenu" yPosition="below" xPosition="before">
+              <button (click)="editarVacunaAplicada(row)" mat-menu-item>
+                <span>Modify</span>
+              </button>
+            </mat-menu>
+          </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
+        <tr (click)="editarVacunaAplicada(row)"
+            *matRowDef="let row; columns: visibleColumns;"
+            class="clickable route-animations-elements"
+            mat-row></tr>
+      </table>
+
+
+      <h3>Atenciones</h3>
+      <table mat-table [dataSource]="atencionesDataSource" class="mat-elevation-z8">
+        <!-- ID -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let atencion">{{ atencion.id }}</td>
+        </ng-container>
+
+        <!-- Fecha -->
+        <ng-container matColumnDef="fecha">
+          <th mat-header-cell *matHeaderCellDef>Fecha</th>
+          <td mat-cell *matCellDef="let atencion">{{ atencion.fecha | date }}</td>
+        </ng-container>-->
+
+        <!-- Hora -->
+        <ng-container matColumnDef="hora">
+          <th mat-header-cell *matHeaderCellDef>Hora</th>
+          <td mat-cell *matCellDef="let atencion">{{ atencion.hora }}</td>
+        </ng-container>-->
+
+        <!-- Anamnesis -->
+        <ng-container matColumnDef="anamnesis">
+          <th mat-header-cell *matHeaderCellDef>Anamnesis</th>
+          <td mat-cell *matCellDef="let atencion">{{ atencion.anamnesis }}</td>
+        </ng-container>
+
+        <!-- Veterinario -->
+        <ng-container matColumnDef="usuario">
+          <th mat-header-cell *matHeaderCellDef>Veterinario</th>
+          <td mat-cell *matCellDef="let atencion">{{ atencion.usuario }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="atencionesColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: atencionesColumns"></tr>
+      </table>
+    </div>
+
+
+    <div  fxLayoutGap="20px" fxLayoutAlign="center center">
+
+</div>
+  </fury-page-layout-content>
+</fury-page-layout>

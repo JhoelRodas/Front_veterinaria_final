@@ -1,0 +1,36 @@
+<!--<mat-dialog-content class="p0" >-->
+  <form (ngSubmit)="submitData()">
+    <fury-card-header>
+    <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+      <div fxFlex="90">
+        <h3 class="text-primary">Configurar accesos</h3>
+      </div>
+      <div fxFlex="10">
+        <button mat-icon-button
+                color="warn"
+                matTooltip="Cancelar"
+                type="button"
+                (click)="dialogRef.close()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+    </fury-card-header>
+      <mat-divider></mat-divider>
+    <fury-card-content>
+      <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <div fxFlex="50"
+             class="privilege-content"
+             *ngFor="let item of data.actionList">
+          <mat-slide-toggle [checked]="isActionChecked(item)"
+                            (change)="toggleActionChange($event.checked, item)">{{item.action}}</mat-slide-toggle>
+        </div>
+      </div>
+    </fury-card-content>
+    <fury-card-actions align="end" class="mb10">
+      <button mat-raised-button
+              color="primary"
+              type="submit">Guardar</button>
+    </fury-card-actions>
+  </form>
+<!--</mat-dialog-content>-->

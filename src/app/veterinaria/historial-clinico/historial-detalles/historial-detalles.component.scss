@@ -1,0 +1,30 @@
+.container {
+  max-width: 800px;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+}
+
+h2 {
+  text-align: center;
+  font-size: 1.6rem;
+  color: #333;
+  margin-bottom: 16px;
+}
+
+/* Estilo para campos de solo lectura */
+.readonly-field input[readonly] {
+  background-color: #f0f0f0; /* Fondo gris claro */
+  color: #333; /* Color de texto */
+  border-radius: 4px; /* Borde redondeado */
+}
+
+.readonly-field .mat-form-field-flex {
+  border: 1px solid #d0d0d0; /* Borde para resaltar */
+  padding: 4px 8px; /* Espaciado interno */
+}

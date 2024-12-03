@@ -1,0 +1,50 @@
+<div mat-dialog-title>{{ isCreateMode() ? 'Crear' : 'Actualizar' }} Producto</div>
+<form [formGroup]="form" (ngSubmit)="save()">
+  <mat-dialog-content>
+    <div fxLayout="column wrap">
+      <mat-form-field fxFlex>
+        <mat-label>Nombre</mat-label>
+        <input type="text" formControlName="nombre" matInput>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-label>Precio Unitario</mat-label>
+        <input type="text" formControlName="precioUnitario" matInput>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-label>Stock</mat-label>
+        <input type="text" formControlName="stock" matInput>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-label>Descripcion</mat-label>
+        <input type="text" formControlName="descripcion" matInput>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Categoria</mat-label>
+        <mat-select formControlName="idCategoria">
+          <mat-option *ngFor="let option of categoriaList"
+                      [value]="option.id">
+            {{option.nombre}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button *ngIf="isCreateMode()"
+            mat-flat-button
+            color="primary"
+            [disabled]="!form.valid">Crear Producto
+    </button>
+    <button *ngIf="isUpdateMode()"
+            mat-flat-button
+            color="primary"
+            [disabled]="!form.valid">Actualizar Producto
+    </button>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,51 @@
+<div mat-dialog-title>{{ isCreateMode() ? 'Crear' : 'Actualizar' }} Proveedor</div>
+<form [formGroup]="form" (ngSubmit)="save()">
+  <mat-dialog-content>
+    <div fxLayout="column wrap">
+      <mat-form-field fxFlex>
+        <mat-label>Nombre</mat-label>
+        <input type="text" formControlName="nombre" matInput>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-label>Telefono</mat-label>
+        <input type="text" formControlName="telefono" matInput>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-label>Correo</mat-label>
+        <input type="text" formControlName="correo" matInput>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-label>Direccion</mat-label>
+        <input type="text" formControlName="direccion" matInput>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-label>Encargado</mat-label>
+        <input type="text" formControlName="encargado" matInput>
+      </mat-form-field>
+
+      <!--      <mat-form-field *ngIf="mode != 'update'" fxFlex>-->
+      <!--        <mat-label>ID Categoria</mat-label>-->
+      <!--        <input type="text" formControlName="idCategoria" matInput>-->
+      <!--      </mat-form-field>-->
+
+
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button *ngIf="isCreateMode()"
+            mat-flat-button
+            color="primary"
+            [disabled]="!form.valid">Registrar Proveedor
+    </button>
+    <button *ngIf="isUpdateMode()"
+            mat-flat-button
+            color="primary"
+            [disabled]="!form.valid">Actualizar Proveedor
+    </button>
+  </mat-dialog-actions>
+</form>

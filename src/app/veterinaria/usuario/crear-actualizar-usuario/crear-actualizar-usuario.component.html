@@ -1,0 +1,52 @@
+<div mat-dialog-title>{{ isCreateMode() ? 'Crear' : 'Actualizar' }} Usuario</div>
+
+<form [formGroup]="form" (ngSubmit)="save()">
+  <mat-dialog-content>
+
+    <div class="person">
+      <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+        <mat-form-field fxFlex>
+          <mat-label>Nombre</mat-label>
+          <input type="text" formControlName="name" matInput>
+        </mat-form-field>
+
+        <mat-form-field fxFlex>
+          <mat-label>UserName</mat-label>
+          <input type="text" formControlName="username" matInput>
+        </mat-form-field>
+
+        <mat-form-field fxFlex>
+          <mat-label>Password</mat-label>
+          <input type="password" formControlName="contrasenia" matInput>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Rol</mat-label>
+          <mat-select formControlName="idAuthRole">
+            <mat-option *ngFor="let option of roleList"
+                        [value]="option.id">
+              {{option.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+<!--        <mat-form-field fxFlex>-->
+<!--          <mat-label>Rol</mat-label>-->
+<!--          <input type="text" formControlName="idAuthRole" matInput>-->
+<!--        </mat-form-field>-->
+
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button *ngIf="isCreateMode()"
+            mat-flat-button
+            color="primary"
+            [disabled]="!form.valid">Crear Usuario
+    </button>
+    <button *ngIf="isUpdateMode()"
+            mat-flat-button
+            color="primary"
+            [disabled]="!form.valid">Actualizar Usuario
+    </button>
+  </mat-dialog-actions>
+</form>

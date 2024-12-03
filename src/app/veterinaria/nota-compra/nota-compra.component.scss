@@ -1,0 +1,16 @@
+.checkbox-container {
+  margin-top: 16px;
+}
+
+mat-form-field {
+  margin-bottom: 16px;
+}
+
+@media (max-width: 600px) {
+  [fxFlex="33%"] {
+    flex: 0 0 100%; /* Ocupa toda la fila en pantallas pequeñas */
+  }
+  [fxFlex="25%"] {
+    flex: 0 0 50%; /* Ocupa 50% en pantallas pequeñas */
+  }
+}
